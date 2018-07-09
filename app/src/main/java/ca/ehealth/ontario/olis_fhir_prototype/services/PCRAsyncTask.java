@@ -13,6 +13,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import ca.ehealth.ontario.olis_fhir_prototype.activities.PCRListActivity;
+import ca.ehealth.ontario.olis_fhir_prototype.customdialogs.ExceptionErrorDialog;
 import ca.ehealth.ontario.olis_fhir_prototype.customdialogs.ProgressCircleDialog;
 import ca.ehealth.ontario.olis_fhir_prototype.models.PCRPatientModel;
 
@@ -23,6 +24,7 @@ public class PCRAsyncTask extends AsyncTask<String, Void, ArrayList<PCRPatientMo
 {
     private LocalSQLOpenHelper sqLiteOpenHelper;
     private ProgressCircleDialog progressCircleDialog;
+    private ExceptionErrorDialog errorDialog;
 
     // We want to keep a WeakReference to the activity context first, and then when we need it we check to see if it is still valid.
     // This is done to prevent memory leaks which would be caused be using something like: private Context myContext;
@@ -33,6 +35,7 @@ public class PCRAsyncTask extends AsyncTask<String, Void, ArrayList<PCRPatientMo
         this.weakReference = new WeakReference<>(inActivity);
         sqLiteOpenHelper = new LocalSQLOpenHelper(inActivity.getApplicationContext());
         progressCircleDialog = new ProgressCircleDialog(inActivity);
+        errorDialog = new ExceptionErrorDialog(inActivity);
     }
 
     @Override
@@ -63,11 +66,14 @@ public class PCRAsyncTask extends AsyncTask<String, Void, ArrayList<PCRPatientMo
             pcrPatient.setHealthCardNumber(healthCardNumber);
 
             // query OLIS for lab totals
-            OLISService olisService = new OLISService();
-            Bundle olisResults = olisService.executeQuery(pcrPatient.getHealthCardNumber(), pcrPatient.getDateOfBirthForQuery(), pcrPatient.getGender());
-            pcrPatient.setLabTotal(olisResults.getTotal());
+            if (!pcrPatient.getName().trim().equals(""))
+            {
+                OLISService olisService = new OLISService();
+                Bundle olisResults = olisService.executeQuery(pcrPatient.getHealthCardNumber(), pcrPatient.getDateOfBirthForQuery(), pcrPatient.getGender());
+                pcrPatient.setLabTotal(olisResults.getTotal());
 
-            results.add(pcrPatient);
+                results.add(pcrPatient);
+            }
         }
 
         cursor.close();
@@ -93,9 +99,16 @@ public class PCRAsyncTask extends AsyncTask<String, Void, ArrayList<PCRPatientMo
             return;
         }
 
-        Intent pcrListIntent = new Intent(activity, PCRListActivity.class);
-        pcrListIntent.putExtra("patients", results);
-        activity.startActivity(pcrListIntent);
+        if (results.size() > 0)
+        {
+            Intent pcrListIntent = new Intent(activity, PCRListActivity.class);
+            pcrListIntent.putExtra("patients", results);
+            activity.startActivity(pcrListIntent);
+        }
+        else
+        {
+            errorDialog.showErrorMessage("No PCR Patients were found!");
+        }
 
         if (progressCircleDialog.isShowing())
         {
