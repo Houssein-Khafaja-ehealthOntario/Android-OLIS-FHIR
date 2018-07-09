@@ -5,23 +5,21 @@ This is an Android application prototype that makes use of the HL7 HAPI FHIR 3.3
 The application's main screen greets the user with a single button: "Clinician View". Once clicked on, the user will query PCR to generate a list of patients. Clicking on one of the patients will take the user to another screen where OLIS is queried and lab results are displayed.
 
 ## Table of Contents
-- [OLIS-FHIR Android Sample](#olis-fhir-android-sample)
-    - [Table of Contents](#table-of-contents)
-    - [Android Features Used](#android-features-used)
-    - [Getting Started](#getting-started)
-        - [**Prerequisites**](#prerequisites)
-        - [**Setting up the Dev Environment**](#setting-up-the-dev-environment)
-            - [Downloading and installing Android Studio](#downloading-and-installing-android-studio)
-            - [Importing the OLIS-FHIR project into Android Studio](#importing-the-olis-fhir-project-into-android-studio)
-            - [Setting up your debugging environment](#setting-up-your-debugging-environment)
-            - [Intel Systems - Installing HAXM](#intel-systems---installing-haxm)
-    - [Importing External HAPI-FHIR Library](#importing-external-hapi-fhir-library)
-        - [**Importing v3.30**](#importing-v330)
-        - [**Importing other versions of HAPI FHIR**](#importing-other-versions-of-hapi-fhir)
-        - [**Important Notes**](#important-notes)
-    - [Authors](#authors)
-    - [License](#license)
-    - [Acknowledgments](#acknowledgments)
+- [Android Features Used](#android-features-used)
+- [Getting Started](#getting-started)
+    - [**Prerequisites**](#prerequisites)
+    - [**Setting up the Dev Environment**](#setting-up-the-dev-environment)
+        - [Downloading and installing Android Studio](#downloading-and-installing-android-studio)
+        - [Importing the OLIS-FHIR project into Android Studio](#importing-the-olis-fhir-project-into-android-studio)
+        - [Setting up your debugging environment](#setting-up-your-debugging-environment)
+        - [Intel Systems - Installing HAXM](#intel-systems---installing-haxm)
+- [Importing External HAPI-FHIR Library](#importing-external-hapi-fhir-library)
+    - [**Importing v3.30**](#importing-v330)
+    - [**Importing other versions of HAPI FHIR**](#importing-other-versions-of-hapi-fhir)
+    - [**Important Notes**](#important-notes)
+- [Authors](#authors)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 ## Android Features Used
 These are the features that were used to put together this project:
