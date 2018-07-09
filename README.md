@@ -70,44 +70,7 @@ Once you have installed Android Studio and you've imported the Android Studio pr
 #### Intel Systems - Installing HAXM
 If you need or want Intel's hardware acceleration software to speed up your Android emulation on Android Studio, then [follow these instructions](https://developer.android.com/studio/run/emulator-acceleration). This is highly recommended for developers running Intel CPUs.
 
-## Importing External HAPI-FHIR Library
-To import libraries not included with Android Studio and Java base libraries, you must edit the build.gradle (Module:app) file. This file can be found under **Gradle Scripts** on the left side in Android Studio.
-
-You must add an ```immplementation 'your library'``` statement to the dependencies { } block in that file.
-### **Importing v3.30**
-Your build.gradle **dependencies block** should look like the following:
-```java
-dependencies {
-    ...
-    ...
-    implementation 'ca.uhn.hapi.fhir:hapi-fhir-android:3.3.0'
-    implementation 'ca.uhn.hapi.fhir:hapi-fhir-structures-dstu3:3.3.0'
-    implementation 'ca.uhn.hapi:hapi-base:2.2'
-    implementation 'ca.uhn.hapi:hapi-structures-v21:2.2'
-    implementation 'ca.uhn.hapi:hapi-structures-v251:2.2'
-    implementation 'ca.uhn.hapi:hapi-hl7overhttp:2.2'
-}
-```
-### **Importing other versions of HAPI FHIR**
-If you have the maven file of a different version of HAPI FHIR that you want to use, you can generate the implementation statements mentioned above based on the values in the Maven file.
-
-**For example:**
-```XML
-<dependency>
-    <groupId>ca.uhn.hapi.fhir</groupId>
-    <artifactId>hapi-fhir-base</artifactId>
-    <version>3.4.0</version>
-</dependency>
-```
-Translates to: ```implementation '[groupId]:[artifactId]:[version]' ```
-
-Or in Android Gradle:
-
-```java
-implementation 'ca.uhn.hapi.fhir:hapi-fhir-base:3.4.0
-```
-
-### **Important Notes**
+## **Important Notes For Developers**
 - Ensure that you have the proper permissions given to your applicaiton by including the following code in your Android Manifest .xml. If you do not include these permissions, your app wont be able to execute network operations.
 - E.G:
 ```xml
